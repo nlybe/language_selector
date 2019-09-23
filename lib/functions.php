@@ -52,7 +52,6 @@ function language_selector_get_allowed_translations() {
  * @return void
  */
 function language_selector_set_logged_out_user_language() {
-	global $CONFIG;
 	
 	if (elgg_is_logged_in()) {
 		return;
@@ -74,17 +73,18 @@ function language_selector_set_logged_out_user_language() {
 		}
 	}
 
-	if (!empty($new_lang) && ($new_lang !== $CONFIG->language)) {
+	$current_language = elgg()->translator->getCurrentLanguage();
+	if (!empty($new_lang) && ($new_lang !== $current_language)) {
 		$allowed = language_selector_get_allowed_translations();
 		if (in_array($new_lang, $allowed)) {
 			// set new language
-			$CONFIG->language = $new_lang;
+			elgg()->translator->setCurrentLanguage($new_lang);
 
 			// language has been change; reload language keys
 			if (elgg_is_active_plugin("translation_editor")) {
 				translation_editor_load_translations();
 			} else {
-				reload_all_translations();
+				elgg()->translator->reloadAllTranslations();
 			}
 		}
 	}

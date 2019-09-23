@@ -35,5 +35,3 @@ elgg_register_event_handler('plugins_boot', 'system', 'language_selector_plugins
 elgg_register_event_handler('pagesetup', 'system', 'language_selector_pagesetup');
 elgg_register_event_handler('upgrade', 'system', 'language_selector_invalidate_setting');
 
-// actions
-elgg_register_action('language_selector/change', dirname(__FILE__) . '/actions/change.php', "logged_in");
